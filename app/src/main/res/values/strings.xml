@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Handller App</string>
+    <string name="show">will change after 5 sec</string>
+    <string name="click">change</string>
+</resources>
