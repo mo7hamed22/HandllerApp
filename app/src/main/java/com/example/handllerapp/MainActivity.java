@@ -1,9 +1,12 @@
 package com.example.handllerapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +21,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         txt=findViewById(R.id.show);
         btn=findViewById(R.id.clickbtn);
+        final Handler handler=new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                //this what i want to change in main thread from different thread
+                txt.setText("Text Changed Now");
+            }
+        };
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -27,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
                             try {
 
                                 Log.i("Tag", "==========start");
-                                wait(1000);
-                                txt.setText("Text Changed Now");
+                                wait(10000);
+                                //what i want to update in different thread
+                                //here just want to tell that i finshed no more
+                                handler.sendEmptyMessage(0);
                                 Log.i("Tag", "==========changed");
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
